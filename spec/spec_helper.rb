@@ -5,6 +5,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require "rspec"
 require "money"
 
+require "i18n"
 require "r18n-core"
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
@@ -23,7 +24,7 @@ RSpec.shared_context 'with i18n locale backend', :i18n do
 
     example.run
 
-    Money.locale_backend = :legacy
+    Money.locale_backend = Money::LocaleBackend::DEFAULT
     I18n.backend = I18n::Backend::Simple.new
     I18n.locale = :en
   end

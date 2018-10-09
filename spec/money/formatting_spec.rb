@@ -20,7 +20,7 @@ describe Money, "formatting" do
 
   context 'without locale_backend' do
     before { Money.locale_backend = nil }
-    after { Money.locale_backend = :legacy }
+    after { Money.locale_backend = Money::LocaleBackend::DEFAULT }
 
     subject(:money) { Money.new(1099_99, 'USD') }
 
@@ -111,7 +111,7 @@ describe Money, "formatting" do
       R18n.reset!
       R18n.set :en
 
-      Money.locale_backend = :legacy
+      Money.locale_backend = Money::LocaleBackend::DEFAULT
     end
 
     context "with available locale" do
@@ -158,10 +158,6 @@ describe Money, "formatting" do
   end
 
   describe "#format" do
-    it 'supports the old formatting options' do
-      expect(Money.zero.format(:display_free)).to eq('free')
-    end
-
     context "Locale :ja" do
       before { @_locale = I18n.locale; I18n.locale = :ja }
 
